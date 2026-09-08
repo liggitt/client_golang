@@ -17,6 +17,7 @@ package v1
 
 import (
 	"context"
+	gojson "encoding/json"
 	"errors"
 	"fmt"
 	"math"
@@ -745,10 +746,10 @@ type Stat struct {
 
 func (rg *RuleGroup) UnmarshalJSON(b []byte) error {
 	v := struct {
-		Name     string            `json:"name"`
-		File     string            `json:"file"`
-		Interval float64           `json:"interval"`
-		Rules    []json.RawMessage `json:"rules"`
+		Name     string              `json:"name"`
+		File     string              `json:"file"`
+		Interval float64             `json:"interval"`
+		Rules    []gojson.RawMessage `json:"rules"`
 	}{}
 
 	if err := json.Unmarshal(b, &v); err != nil {
@@ -860,8 +861,8 @@ func (r *RecordingRule) UnmarshalJSON(b []byte) error {
 
 func (qr *queryResult) UnmarshalJSON(b []byte) error {
 	v := struct {
-		Type   model.ValueType `json:"resultType"`
-		Result json.RawMessage `json:"result"`
+		Type   model.ValueType   `json:"resultType"`
+		Result gojson.RawMessage `json:"result"`
 	}{}
 
 	err := json.Unmarshal(b, &v)
@@ -1477,12 +1478,12 @@ type apiClientImpl struct {
 }
 
 type apiResponse struct {
-	Status    string          `json:"status"`
-	Data      json.RawMessage `json:"data"`
-	ErrorType ErrorType       `json:"errorType"`
-	Error     string          `json:"error"`
-	Warnings  []string        `json:"warnings,omitempty"`
-	Infos     []string        `json:"infos,omitempty"`
+	Status    string            `json:"status"`
+	Data      gojson.RawMessage `json:"data"`
+	ErrorType ErrorType         `json:"errorType"`
+	Error     string            `json:"error"`
+	Warnings  []string          `json:"warnings,omitempty"`
+	Infos     []string          `json:"infos,omitempty"`
 }
 
 func apiError(code int) bool {

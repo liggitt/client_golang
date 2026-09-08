@@ -15,6 +15,7 @@ package v1
 
 import (
 	"context"
+	gojson "encoding/json"
 	"errors"
 	"io"
 	"math"
@@ -1444,7 +1445,7 @@ func TestAPIClientDo(t *testing.T) {
 			code: http.StatusUnprocessableEntity,
 			response: &apiResponse{
 				Status:    "error",
-				Data:      json.RawMessage(`null`),
+				Data:      gojson.RawMessage(`null`),
 				ErrorType: ErrBadData,
 				Error:     "failed",
 			},
@@ -1458,7 +1459,7 @@ func TestAPIClientDo(t *testing.T) {
 			code: http.StatusUnprocessableEntity,
 			response: &apiResponse{
 				Status:    "error",
-				Data:      json.RawMessage(`"test"`),
+				Data:      gojson.RawMessage(`"test"`),
 				ErrorType: ErrTimeout,
 				Error:     "timed out",
 			},
@@ -1490,7 +1491,7 @@ func TestAPIClientDo(t *testing.T) {
 			code: http.StatusBadRequest,
 			response: &apiResponse{
 				Status:    "error",
-				Data:      json.RawMessage(`null`),
+				Data:      gojson.RawMessage(`null`),
 				ErrorType: ErrBadData,
 				Error:     "end timestamp must not be before start time",
 			},
@@ -1511,7 +1512,7 @@ func TestAPIClientDo(t *testing.T) {
 			code: http.StatusUnprocessableEntity,
 			response: &apiResponse{
 				Status: "success",
-				Data:   json.RawMessage(`"test"`),
+				Data:   gojson.RawMessage(`"test"`),
 			},
 			expectedErr: &Error{
 				Type: ErrBadResponse,
@@ -1522,7 +1523,7 @@ func TestAPIClientDo(t *testing.T) {
 			code: http.StatusUnprocessableEntity,
 			response: &apiResponse{
 				Status:    "success",
-				Data:      json.RawMessage(`"test"`),
+				Data:      gojson.RawMessage(`"test"`),
 				ErrorType: ErrTimeout,
 				Error:     "timed out",
 			},
@@ -1535,7 +1536,7 @@ func TestAPIClientDo(t *testing.T) {
 			code: http.StatusOK,
 			response: &apiResponse{
 				Status:    "error",
-				Data:      json.RawMessage(`"test"`),
+				Data:      gojson.RawMessage(`"test"`),
 				ErrorType: ErrTimeout,
 				Error:     "timed out",
 			},
@@ -1548,7 +1549,7 @@ func TestAPIClientDo(t *testing.T) {
 			code: http.StatusOK,
 			response: &apiResponse{
 				Status:    "error",
-				Data:      json.RawMessage(`"test"`),
+				Data:      gojson.RawMessage(`"test"`),
 				ErrorType: ErrTimeout,
 				Error:     "timed out",
 				Warnings:  []string{"a"},
@@ -1563,7 +1564,7 @@ func TestAPIClientDo(t *testing.T) {
 			code: http.StatusOK,
 			response: &apiResponse{
 				Status:    "error",
-				Data:      json.RawMessage(`"test"`),
+				Data:      gojson.RawMessage(`"test"`),
 				ErrorType: ErrTimeout,
 				Error:     "timed out",
 				Infos:     []string{"b"},
@@ -1578,7 +1579,7 @@ func TestAPIClientDo(t *testing.T) {
 			code: http.StatusOK,
 			response: &apiResponse{
 				Status:    "error",
-				Data:      json.RawMessage(`"test"`),
+				Data:      gojson.RawMessage(`"test"`),
 				ErrorType: ErrTimeout,
 				Error:     "timed out",
 				Warnings:  []string{"a"},
